@@ -56,7 +56,8 @@ jobs:
           $installerPath = "$env:TEMP\tailscale.msi"
          
           Invoke-WebRequest -Uri $tsUrl -OutFile $installerPath
-          Start-Process msiexec.exe -ArgumentList "/i", ""$installerPath"", "/quiet", "/norestart" -Wait
+          $args = @("/i", $installerPath, "/quiet", "/norestart")
+          Start-Process -FilePath "msiexec.exe" -ArgumentList $args -Wait -NoNewWindow
           Remove-Item $installerPath -Force
       - name: Establish Tailscale Connection
         run: |
